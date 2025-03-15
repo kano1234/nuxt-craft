@@ -16,8 +16,12 @@ jobs:
           The tests failed. Please check the logs for more information.
           https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
           EOF
+      - name: Check env
+        run: |
+          which gh
+          gh --version
       - name: Create PR comment
         run: |
-          gh pr comment ${{ github.event.number }} --body-file comment.md
+          gh pr comment ${{ github.event.number }} -F comment.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
