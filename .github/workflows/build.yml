@@ -21,6 +21,8 @@ jobs:
           echo ${{ github.repository }}
           echo ${{ github.api_url }}
       - name: Create PR comment
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # curl -XPOST 'https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/comments' \
           #   --header 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' \
