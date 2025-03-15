@@ -14,3 +14,10 @@ jobs:
           echo "Hello World!"
           echo ${{ github.repository }}
           echo ${{ github.run_id }}
+          echo ${{ github.event.number }}
+          echo ${{ secrets.GITHUB_TOKEN }}
+      - name: Create PR comment
+        run: |
+          gh pr comment ${{ github.event.number }} --body-file comment.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
