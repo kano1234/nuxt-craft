@@ -11,11 +11,11 @@ jobs:
     steps:
       - name: Print git env
         run: |
-          echo "Hello World!"
-          echo ${{ github.repository }}
-          echo ${{ github.run_id }}
-          echo ${{ github.event.number }}
-          echo ${{ secrets.GITHUB_TOKEN }}
+          cat  << EOF > comment.md
+          ## Test Failed
+          The tests failed. Please check the logs for more information.
+          https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          EOF
       - name: Create PR comment
         run: |
           gh pr comment ${{ github.event.number }} --body-file comment.md
