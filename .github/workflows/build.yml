@@ -1,0 +1,31 @@
+name: Hello World
+on:
+  pull_request:
+    # Sequence of patterns matched against refs/heads
+    branches:
+      - main
+jobs:
+  Hello-World-Job:
+    runs-on:
+      - codebuild-github-actions-test-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Print git env
+        run: |
+          echo "ok" > comment.md
+      - name: Check env
+        run: |
+          which gh
+          gh --version
+          echo ${{ github.repository_owner }}
+          echo ${{ github.repository }}
+          echo ${{ github.api_url }}
+      - name: Create PR comment
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # curl -XPOST 'https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/comments' \
+          #   --header 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' \
+          #   --header 'Content-Type: application/json' \
+          #   -d '{"body": "curl comment!"}'
+          gh pr comment ${{ github.event.number }} --body-file comment.md
