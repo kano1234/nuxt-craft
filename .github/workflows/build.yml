@@ -9,4 +9,8 @@ jobs:
     runs-on:
       - codebuild-github-actions-test-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
-      - run: echo "Hello World!"
+      - name: Print git env
+        run: |
+          echo "Hello World!"
+          echo ${{ github.repository }}
+          echo ${{ github.run_id }}
